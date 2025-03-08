@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="hexapod_Sim">
+ <!--> ..................................................Material .......................................... -->
+  <material name="white">
+    <color rgba=" 0.5 0.5 0.5 1.0"/>
+  </material>
+  <!-- .........................................Links..............................................................-->
+  <link name="base_link">
+
+    <visual>
+      <origin xyz="-0.19 0 0" rpy="0 0 0" />
+
+      <geometry>
+
+        <mesh filename="package://hexapod_Sim/CoxaServo.STL" scale="  5 5 5" />
+
+      </geometry>
+
+      <material name="white"/>
+
+    </visual>
+  </link>
+
+  <link name="coxa">
+    <visual>
+
+      <origin xyz="0.28 0.115 0" rpy="0 0 3.14" />
+
+      <geometry>
+        <mesh filename="package://hexapod_Sim/CoxaAssm.STL" scale="  5 5 5" />
+      </geometry>
+
+      <material name="white"/>
+
+    </visual>
+  </link>
+
+
+
+  <link name="femur">
+    <visual>
+      <origin xyz="0.366 0.29 -0.06" rpy="0 0 3.14" />
+
+      <geometry>
+        <mesh filename="package://hexapod_Sim/Femur.STL" scale="  5 5 5" />
+      </geometry>
+
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <link name="tibia">
+    <visual>
+      <origin xyz="0 0.25 -0.5525" rpy="0 0 3.14" />
+
+      <geometry>
+        <mesh
+          filename="package://hexapod_Sim/Tibia.STL" scale="  5 5 5" />
+      </geometry>
+
+      <material name="white"/>
+    </visual>
+  </link>
+
+  <!-- ......................................................................Joints........................................................-->
+
+
+  <joint name="coxa_joint" type="revolute">
+    <parent link="base_link"/>
+    <child link="coxa"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" velocity="50.0" effort="1000.0"/>
+    <origin xyz="0.0 0.0 -0.02" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="femur_joint" type="revolute">:
+    <parent link="coxa"/>
+    <child link="femur"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="1.57" upper="-1.57" velocity="50.0" effort="1000.0"/>
+    <origin xyz="0.213 -0.15 0.095" rpy="0 0 0"/>
+  </joint>
+  
+  <joint name="tibia_joint" type="revolute">
+    <parent link="femur"/>
+    <child link="tibia"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="1.57" upper="-1.57" velocity="50.0" effort="1000.0"/>
+    <origin xyz="0.3 0 0" rpy="0 0 0"/>
+  </joint>
+  
+  
+</robot>

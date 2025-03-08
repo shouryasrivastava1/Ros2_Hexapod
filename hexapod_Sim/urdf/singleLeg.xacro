@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="hexapod_single_leg">
+
+  <material name="white">
+    <color rgba=" 0.5 0.5 0.5 1.0"/>
+  </material>    
+    <xacro:macro name="HexaLeg" params="legnum parentlink x y z r p ya">
+
+        <joint name="frame2leg${legnum}" type="fixed">
+            <parent link="${parentlink}"/>
+            <child link="base_link${legnum}"/>
+            <origin xyz="${x} ${y} ${z}" rpy="${r} ${p} ${ya}"/>
+        </joint>
+        
+
+        <!-- .........................................Links..............................................................-->
+        <link name="base_link${legnum}">
+
+            <visual>
+            <origin xyz="-0.19 0 0" rpy="0 0 0" />
+
+            <geometry>
+
+                <mesh filename="package://hexapod_Sim/CoxaServo.STL" scale="  5 5 5" />
+
+            </geometry>
+
+            <material name="white"/>
+
+            </visual>
+        </link>
+
+        <link name="coxa${legnum}">
+            <visual>
+
+            <origin xyz="0.28 0.115 0" rpy="0 0 3.14" />
+
+            <geometry>
+                <mesh filename="package://hexapod_Sim/CoxaAssm.STL" scale="  5 5 5" />
+            </geometry>
+
+            <material name="white"/>
+
+            </visual>
+        </link>
+
+
+
+        <link name="femur${legnum}">
+            <visual>
+            <origin xyz="0.366 0.29 -0.06" rpy="0 0 3.14" />
+
+            <geometry>
+                <mesh filename="package://hexapod_Sim/Femur.STL" scale="  5 5 5" />
+            </geometry>
+
+            <material name="white"/>
+            </visual>
+        </link>
+
+        <link name="tibia${legnum}">
+            <visual>
+            <origin xyz="0 0.25 -0.5525" rpy="0 0 3.14" />
+
+            <geometry>
+                <mesh
+                filename="package://hexapod_Sim/Tibia.STL" scale="  5 5 5" />
+            </geometry>
+
+            <material name="white"/>
+            </visual>
+        </link>
+
+        <!-- ......................................................................Joints........................................................-->
+
+
+        <joint name="coxa_joint${legnum}" type="revolute">
+            <parent link="base_link${legnum}"/>
+            <child link="coxa${legnum}"/>
+            <axis xyz="0 0 1"/>
+            <limit lower="-1.57" upper="1.57" velocity="50.0" effort="1000.0"/>
+            <origin xyz="0.0 0.0 -0.02" rpy="0 0 0"/>
+        </joint>
+
+        <joint name="femur_joint${legnum}" type="revolute">:
+            <parent link="coxa${legnum}"/>
+            <child link="femur${legnum}"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="1.57" upper="-1.57" velocity="50.0" effort="1000.0"/>
+            <origin xyz="0.213 -0.15 0.095" rpy="0 0 0"/>
+        </joint>
+        
+        <joint name="tibia_joint${legnum}" type="revolute">
+            <parent link="femur${legnum}"/>
+            <child link="tibia${legnum}"/>
+            <axis xyz="0 1 0"/>
+            <limit lower="1.57" upper="-1.57" velocity="50.0" effort="1000.0"/>
+            <origin xyz="0.3 0 0" rpy="0 0 0"/>
+        </joint>
+
+    </xacro:macro>
+    
+</robot>

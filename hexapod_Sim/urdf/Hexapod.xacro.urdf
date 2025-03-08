@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="Hexapod_Assembly">
+    <xacro:include filename="$(find hexapod_Sim)/urdf/singleLeg.xacro"/>
+
+    <link name="base_link">
+        <visual>
+            <origin xyz="-0.38 -0.25 0.0" rpy="0 0.0 0.0"/>
+            
+            <geometry>
+                <mesh filename="package://hexapod_Sim/Bottom.STL" scale="5 5 5"/>
+            </geometry>
+            <material name="white"/>
+        </visual>
+    </link>
+
+    <link name="frame_link">
+        <visual>
+            <origin xyz="-0.55 -0.5 0.0" rpy="0 0.0 0.0"/>
+            
+            <geometry>
+                <mesh filename="package://hexapod_Sim/Frame.STL" scale="5 5 5"/>
+            </geometry>
+            <material name="white"/>
+
+            
+        </visual>
+    </link>
+
+    <joint name="base2frame" type="fixed">
+        <parent link="base_link"/>
+        <child link="frame_link"/>
+        <origin xyz="0.0 0.0 0.095" rpy="0.0 0.0 0.0"/>
+    </joint>
+    
+
+   <!-- -2.3-2.3, -0.85  -->
+    <xacro:HexaLeg legnum="0" parentlink="frame_link" x="0.4583" y="0.375" z="-0.08" r="0" p="0" ya="-5.44"/>    
+    <xacro:HexaLeg legnum="1" parentlink="frame_link" x="0.4583" y="-0.3125" z="-0.08" r="0" p="0" ya="5.44"/>    
+    <xacro:HexaLeg legnum="2" parentlink="frame_link" x="0" y="0.4375" z="-0.08" r="0" p="0" ya="-4.71"/>    
+    <xacro:HexaLeg legnum="3" parentlink="frame_link" x="0" y="-0.39583" z="-0.08" r="0" p="0" ya="4.71"/>    
+    <xacro:HexaLeg legnum="4" parentlink="frame_link" x="-0.432" y="0.37" z="-0.08" r="0" p="0" ya="-3.99"/>
+    <xacro:HexaLeg legnum="5" parentlink="frame_link" x="-0.416" y="-0.33" z="-0.08" r="0" p="0" ya="3.99"/>    
+
+</robot>
